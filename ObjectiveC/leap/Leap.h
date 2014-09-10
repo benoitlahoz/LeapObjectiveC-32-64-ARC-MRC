@@ -4762,7 +4762,6 @@ namespace Leap {
    * Gesture.ScreenTap.MinForwardVelocity  float      50            mm/s
    * Gesture.ScreenTap.HistorySeconds      float      0.1           s
    * Gesture.ScreenTap.MinDistance         float      5.0           mm
-   * head_mounted_display_mode             boolean    false         n/a
    * ====================================  ========== ============= =======
    * \endtable
    *
@@ -4772,12 +4771,6 @@ namespace Leap {
    * has dispatched the serviceConnected or connected events or
    * Controller::isConnected is true. The configuration value changes are
    * not persistent; your application needs to set the values every time it runs.
-   *
-   * **Note:** "head_mounted_display_mode" is a temporary setting that tells the
-   * Leap Motion software to expect hands viewed from the top rather than the bottom.
-   * In the long run, we expect that the software will handle both automatically
-   * without the need for a flag. This setting can also be set from the Leap Motion
-   * control panel.
    *
    * @see CircleGesture
    * @see KeyTapGesture
@@ -5099,11 +5092,29 @@ namespace Leap {
      * * POLICY_BACKGROUND_FRAMES -- requests that your application receives frames
      *   when it is not the foreground application for user input.
      *
-     * * POLICY_IMAGES -- request that your application receives images from the 
-     *   device cameras.
+     *   The background frames policy determines whether an application
+     *   receives frames of tracking data while in the background. By
+     *   default, the Leap Motion  software only sends tracking data to the foreground application.
+     *   Only applications that need this ability should request the background
+     *   frames policy. The "Allow Background Apps" checkbox must be enabled in the
+     *   Leap Motion Control Panel or this policy will be denied.
+     *
+     * * POLICY_IMAGES -- request that your application receives images from the
+     *   device cameras. The "Allow Images" checkbox must be enabled in the
+     *   Leap Motion Control Panel or this policy will be denied.
+     *
+     *   The images policy determines whether an application recieves image data from
+     *   the Leap Motion sensors which each frame of data. By default, this data is
+     *   not sent. Only applications that use the image data should request this policy.
+     *
      *
      * * POLICY_OPTIMIZE_HMD -- request that the tracking be optimized for head-mounted
      *   tracking.
+     *   
+     *   The optimize HMD policy improves tracking in situations where the Leap
+     *   Motion hardware is attached to a head-mounted display. This policy is
+     *   not granted for devices that cannot be mounted to an HMD, such as 
+     *   Leap Motion controllers embedded in a laptop or keyboard.
      *
      * Some policies can be denied if the user has disabled the feature on
      * their Leap Motion control panel.
@@ -5169,24 +5180,9 @@ namespace Leap {
      * The desired policy flags must be set every time an application runs.
      *
      * Policy changes are completed asynchronously and, because they are subject
-     * to user approval, may not complete successfully. Call
+     * to user approval or system compatibility checks, may not complete successfully. Call
      * Controller::policyFlags() after a suitable interval to test whether
      * the change was accepted.
-     *
-     * Currently, the background frames policy is the only policy supported.
-     * The background frames policy determines whether an application
-     * receives frames of tracking data while in the background. By
-     * default, the Leap Motion  software only sends tracking data to the foreground application.
-     * Only applications that need this ability should request the background
-     * frames policy.
-     *
-     * At this time, you can use the Leap Motion Settings dialog to
-     * globally enable or disable the background frames policy. However,
-     * each application that needs tracking data while in the background
-     * must also set the policy flag using this function.
-     *
-     * This function can be called before the Controller object is connected,
-     * but the request will be sent to the Leap Motion software after the Controller connects.
      *
      * \include Controller_setPolicyFlags.txt
      *
