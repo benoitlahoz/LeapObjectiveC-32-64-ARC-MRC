@@ -1,4 +1,4 @@
-LeapObjectiveC-32-64-ARC-MRC (for Leap SDK 2.1.2)
+LeapObjectiveC-32-64-ARC-MRC (for Leap SDK 2.1.3)
 =================================================
 
 The LeapObjectiveC files and Cocoa original Leap Motion Sample Project modified to handle both ARC and MRC, in 32 and 64 bits modes.
