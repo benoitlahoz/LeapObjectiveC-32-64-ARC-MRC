@@ -421,10 +421,10 @@
 
     Leap::Matrix inverted = temp.rigidInverse();
 #if !__has_feature(objc_arc)
-    LeapMatrix *rigidInverse = [[[LeapMatrix alloc] initWithXBasis:[[[LeapVector alloc] initWithLeapVector:&inverted.xBasis] autorelease]
-                                                           yBasis:[[[LeapVector alloc] initWithLeapVector:&inverted.yBasis] autorelease]
-                                                           zBasis:[[[LeapVector alloc] initWithLeapVector:&inverted.zBasis] autorelease]
-                                                           origin:[[[LeapVector alloc] initWithLeapVector:&inverted.origin] autorelease]] autorelease];
+    LeapMatrix *rigidInverse = [[[LeapMatrix alloc] initWithXBasis:[[LeapVector alloc] initWithLeapVector:&inverted.xBasis]
+                                                            yBasis:[[LeapVector alloc] initWithLeapVector:&inverted.yBasis]
+                                                            zBasis:[[LeapVector alloc] initWithLeapVector:&inverted.zBasis]
+                                                            origin:[[LeapVector alloc] initWithLeapVector:&inverted.origin]] autorelease];
 #else
     LeapMatrix *rigidInverse = [[LeapMatrix alloc] initWithXBasis:[[LeapVector alloc] initWithLeapVector:&inverted.xBasis]
                                                            yBasis:[[LeapVector alloc] initWithLeapVector:&inverted.yBasis]
